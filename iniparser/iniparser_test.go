@@ -107,11 +107,11 @@ func TestLoadFromFile(t *testing.T) {
 			t.Errorf("got %q want %q", e, "nil")
 		}
 		m := map[string]map[string]string{
-			"owner": map[string]string{
+			"owner": {
 				"name":         "John Doe",
 				"organization": "Acme Widgets Inc.",
 			},
-			"database": map[string]string{
+			"database": {
 				"server": "192.0.2.62",
 				"port":   "143",
 				"file":   "payroll.dat",
