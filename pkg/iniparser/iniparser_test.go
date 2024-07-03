@@ -133,7 +133,10 @@ server = 192.0.2.62
 port = 143
 file = payroll.dat`
 	parser := NewIniParser()
-	parser.LoadFromString(input)
+	e := parser.LoadFromString(input)
+	if e != nil {
+		t.Errorf("got %q want %q", e, "nil")
+	}
 	got := parser.GetSectionNames()
 	want := []string{"owner", "database"}
 	if !reflect.DeepEqual(got, want) {
@@ -151,7 +154,10 @@ server = 192.0.2.62
 port = 143
 file = payroll.dat`
 		parser := NewIniParser()
-		parser.LoadFromString(input)
+		e := parser.LoadFromString(input)
+		if e != nil {
+			t.Errorf("got %q want %q", e, "nil")
+		}
 		_, got := parser.Get("dumm", "key")
 		if got != ErrSectionNotThere {
 			t.Errorf("got %q want %q", got, ErrSectionNotThere)
@@ -167,7 +173,10 @@ server = 192.0.2.62
 port = 143
 file = payroll.dat`
 		parser := NewIniParser()
-		parser.LoadFromString(input)
+		e := parser.LoadFromString(input)
+		if e != nil {
+			t.Errorf("got %q want %q", e, "nil")
+		}
 		_, got := parser.Get("owner", "key")
 		if got != ErrKeyNotThere {
 			t.Errorf("got %q want %q", got, ErrKeyNotThere)
@@ -183,7 +192,10 @@ server = 192.0.2.62
 port = 143
 file = payroll.dat`
 		parser := NewIniParser()
-		parser.LoadFromString(input)
+		e := parser.LoadFromString(input)
+		if e != nil {
+			t.Errorf("got %q want %q", e, "nil")
+		}
 		data, got := parser.Get("owner", "name")
 		if got != nil {
 			t.Errorf("got %q as an error, want %q", got, "nil")
@@ -204,12 +216,15 @@ server = 192.0.2.62
 port = 143
 file = payroll.dat`
 		parser := NewIniParser()
-		parser.LoadFromString(input)
+		e := parser.LoadFromString(input)
+		if e != nil {
+			t.Errorf("got %q want %q", e, "nil")
+		}
 		got := parser.Set("owner", "year", "2019")
 		if got != nil {
 			t.Errorf("got %q as an error, want %q", got, "nil")
 		}
-		section, _ := parser.data["owner"]
+		section := parser.data["owner"]
 		value := section["year"]
 		if value != "2019" {
 			t.Errorf("got %q , want %q", value, "2019")
@@ -225,12 +240,15 @@ server = 192.0.2.62
 port = 143
 file = payroll.dat`
 		parser := NewIniParser()
-		parser.LoadFromString(input)
+		e := parser.LoadFromString(input)
+		if e != nil {
+			t.Errorf("got %q want %q", e, "nil")
+		}
 		got := parser.Set("section", "key", "value")
 		if got != nil {
 			t.Errorf("got %q as an error, want %q", got, "nil")
 		}
-		section, _ := parser.data["section"]
+		section := parser.data["section"]
 		value := section["key"]
 		if value != "value" {
 			t.Errorf("got %q , want %q", value, "2019")
@@ -246,7 +264,10 @@ server = 192.0.2.62
 port = 143
 file = payroll.dat`
 		parser := NewIniParser()
-		parser.LoadFromString(input)
+		e := parser.LoadFromString(input)
+		if e != nil {
+			t.Errorf("got %q want %q", e, "nil")
+		}
 		got := parser.Set("owner", "name", "nabila")
 		if got != ErrKeyAlreadyExists {
 			t.Errorf("got %q as an error, want %q", got, ErrKeyAlreadyExists)
@@ -264,7 +285,10 @@ server=192.0.2.62
 port=143
 file=payroll.dat`
 		parser := NewIniParser()
-		parser.LoadFromString(input)
+		e := parser.LoadFromString(input)
+		if e != nil {
+			t.Errorf("got %q want %q", e, "nil")
+		}
 		strOutput := parser.String()
 		splittedStrOut := strings.Split(strOutput, "\n")
 		fmt.Println((len(splittedStrOut)))
@@ -287,7 +311,10 @@ server = 192.0.2.62
 port = 143
 file = payroll.dat`
 		parser := NewIniParser()
-		parser.LoadFromString(input)
+		e := parser.LoadFromString(input)
+		if e != nil {
+			t.Errorf("got %q want %q", e, "nil")
+		}
 		got := parser.SaveToFile(path)
 		if got != nil {
 			t.Errorf("got %q as an error, want %q", got, "nil")
@@ -304,7 +331,10 @@ server = 192.0.2.62
 port = 143
 file = payroll.dat`
 		parser := NewIniParser()
-		parser.LoadFromString(input)
+		e := parser.LoadFromString(input)
+		if e != nil {
+			t.Errorf("got %q want %q", e, "nil")
+		}
 		got := parser.SaveToFile(path)
 		if got != ErrNotINI {
 			t.Errorf("got %q as an error, want %q", got, ErrNotINI)
@@ -321,7 +351,10 @@ server = 192.0.2.62
 port = 143
 file = payroll.dat`
 		parser := NewIniParser()
-		parser.LoadFromString(input)
+		e := parser.LoadFromString(input)
+		if e != nil {
+			t.Errorf("got %q want %q", e, "nil")
+		}
 		got := parser.SaveToFile(path)
 		if got != ErrOpeningFile {
 			t.Errorf("got %q as an error, want %q", got, ErrOpeningFile)

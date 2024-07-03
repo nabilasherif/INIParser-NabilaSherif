@@ -17,6 +17,7 @@ var ErrReadingFile = errors.New("can't read file")
 var ErrOpeningFile = errors.New("can't open file")
 var ErrInvalidContent = errors.New("invalid content to be stored in an ini parser")
 var ErrSectionAlreadyThere = errors.New("there is already a section with the provided name")
+var ErrWritingToFile = errors.New("problem when writing to file")
 
 // defining a data type for the ini parser
 type IniParser struct {
@@ -152,9 +153,9 @@ func (p *IniParser) SaveToFile(filepath string) error { //.data bas w create fil
 		return ErrOpeningFile
 	}
 	defer f.Close()
-	f.WriteString(s)
+	_, e = f.WriteString(s)
+	if e != nil {
+		return ErrWritingToFile
+	}
 	return nil
 }
-
-//getsections
-//reflect.DeepEqual
