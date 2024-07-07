@@ -19,21 +19,3 @@ jobs:
 
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v6
-        with:
-          working-directory: ${{ matrix.dir }}
-          args: --config=../.golangci.yml
-
-    strategy:
-      fail-fast: false
-      matrix:
-        dir:
-          - activation-service
-          - farmerbot 
-          - grid-cli
-          - grid-client
-          - grid-proxy
-          - gridify
-          - monitoring-bot
-          - rmb-sdk-go
-          - user-contracts-mon 
-          - tfrobot
