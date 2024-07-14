@@ -53,6 +53,21 @@ file = payroll.dat`
 			t.Errorf("got %q want %q", e, ErrInvalidContent)
 		}
 	})
+	t.Run("Empty key or value", func(t *testing.T) {
+		input := `
+[owner]
+= John Doe
+organization = Acme Widgets Inc.
+database
+server = 192.0.2.62     
+port = 143
+file = payroll.dat`
+		parser := NewIniParser()
+		e := parser.LoadFromString(input)
+		if e != ErrEmptyKeyORValue {
+			t.Errorf("got %q want %q", e, ErrEmptyKeyORValue)
+		}
+	})
 	t.Run("duplicate section name", func(t *testing.T) {
 		input := `
 [owner]

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"slices"
 	"strings"
 )
 
@@ -18,6 +19,7 @@ var ErrOpeningFile = errors.New("can't open file")
 var ErrInvalidContent = errors.New("invalid content to be stored in an ini parser")
 var ErrSectionAlreadyThere = errors.New("there is already a section with the provided name")
 var ErrWritingToFile = errors.New("problem when writing to file")
+var ErrEmptyKeyORValue = errors.New("key or value is empty")
 
 // defining a data type for the ini parser
 type IniParser struct {
@@ -33,8 +35,6 @@ func NewIniParser() *IniParser {
 // given a string, call the helper to check for valid ini parser content and add the content to the parser
 func (p *IniParser) LoadFromString(str string) error {
 	err := p.parse(str)
-	// fmt.Println(p.data)
-	fmt.Println(err)
 	return err
 }
 
@@ -44,12 +44,12 @@ func (p *IniParser) LoadFromFile(file string) error {
 		return ErrNotINI
 	}
 	data, e := os.ReadFile(file)
-	stringData := string(data)
 	if e != nil {
 		return ErrReadingFile
 	}
-	err := p.parse(stringData)
-	return err
+	stringData := string(data)
+	e = p.parse(stringData)
+	return e
 }
 
 // helper for LoadFromString and LoadFromFile to check for valid content and to add to the parser
@@ -74,6 +74,9 @@ func (p *IniParser) parse(data string) error {
 			p.data[sectionName] = section
 		} else {
 			currentKandV := strings.SplitN(line, "=", 2)
+			if slices.Contains(currentKandV, "") {
+				return ErrEmptyKeyORValue
+			}
 			key := strings.TrimSpace(currentKandV[0])
 			value := strings.TrimSpace(currentKandV[1])
 			values := p.data[sectionName]
