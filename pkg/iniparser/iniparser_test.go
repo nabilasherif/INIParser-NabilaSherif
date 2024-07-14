@@ -117,7 +117,7 @@ func TestLoadFromFile(t *testing.T) {
 	})
 	t.Run("otherwise it works", func(t *testing.T) {
 		parser := NewIniParser()
-		e := parser.LoadFromFile("/root/INIParser-NabilaSherif/iniparser/toloadfrom.ini")
+		e := parser.LoadFromFile("/root/INIParser-NabilaSherif/pkg/testdata/toloadfrom.ini")
 		if e != nil {
 			t.Errorf("got %q want %q", e, "nil")
 		}
